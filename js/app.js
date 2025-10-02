@@ -140,7 +140,7 @@
 		};
 		Object.values(columns).forEach(col => col.innerHTML = '');
 		for (const task of tasks) {
-			const el = document.createElement('div');
+			const el = document.createElement('article');
 			el.className = 'card-task';
 			el.draggable = true;
 			el.dataset.id = task.id;
