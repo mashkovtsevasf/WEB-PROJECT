@@ -10,7 +10,6 @@
 	--warning: #f7b955;
 	--border: #2a2f3a;
 	
-	/* Responsive units */
 	--base-font-size: 1rem;
 	--header-height: 4rem;
 	--container-padding: clamp(0.5rem, 2vw, 2rem);
@@ -55,7 +54,7 @@ a {
 .header-content {
 	display: flex;
 	align-items: center;
-	justify-content: space-between; /* Рівномірний розподіл елементів */
+	justify-content: space-between; 
 	padding: var(--spacing-md) var(--container-padding);
 	max-width: 1200px;
 	margin: 0 auto;
@@ -519,7 +518,6 @@ label {
 	outline-offset: 2px;
 }
 
-/* Footer Styles */
 .app-footer {
 	background: var(--panel);
 	border-top: 1px solid var(--border);
@@ -556,7 +554,6 @@ label {
 	color: var(--muted);
 }
 
-/* Card animations */
 .card-task {
 	animation: slideInUp 0.3s ease-out;
 	transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -578,7 +575,6 @@ label {
 	}
 }
 
-/* Improved responsive design */
 @media (max-width: 1200px) {
 	.container {
 		padding: 1rem;
@@ -603,20 +599,20 @@ label {
 	.top-nav {
 		position: fixed;
 		top: 0;
-		right: -100%; /* Змінюємо з left на right */
+		right: -100%;
 		width: 80%;
 		max-width: 300px;
 		height: 100vh;
 		background: var(--panel);
 		flex-direction: column;
 		padding: 4rem 1rem 1rem;
-		transition: right 0.3s ease; /* Змінюємо transition на right */
+		transition: right 0.3s ease;
 		z-index: 15;
-		border-left: 1px solid var(--border); /* Змінюємо border-right на border-left */
+		border-left: 1px solid var(--border);
 	}
 	
 	.top-nav.active {
-		right: 0; /* Змінюємо з left: 0 на right: 0 */
+		right: 0;
 	}
 	
 	.top-nav a {
@@ -716,7 +712,6 @@ label {
 		padding: 0 0.5rem;
 	}
 	
-	/* Адаптивна таблица завдань для мобільних */
 	.table {
 		font-size: 0.875rem;
 		overflow-x: auto;
@@ -781,7 +776,6 @@ label {
 		padding: 0.25rem 0.5rem;
 	}
 	
-	/* Адаптивна таблиця користувачів для мобільних */
 	#users-table .table tr {
 		display: flex;
 		flex-direction: column;
@@ -803,7 +797,7 @@ label {
 	
 	#users-table .table td:last-child {
 		border-bottom: none;
-		justify-content: flex-start; /* Переміщуємо кнопку вліво */
+		justify-content: flex-start;
 	}
 	
 	#users-table .table td:before {
@@ -816,7 +810,7 @@ label {
 	
 	#users-table .table td:last-child:before {
 		content: "";
-		display: none; /* Приховуємо псевдоелемент для кнопки */
+		display: none;
 	}
 	
 	#users-table .table td:last-child button {
@@ -835,7 +829,6 @@ label {
 		max-width: 150px;
 	}
 	
-	/* Адаптивна форма додавання користувачів */
 	.toolbar .row {
 		flex-direction: column;
 		gap: 0.75rem;
@@ -871,7 +864,6 @@ label {
 	}
 }
 
-/* Медіа-запит для середніх екранів - ховаємо десктопні кнопки, залишаємо тільки в бургер-меню */
 @media (min-width: 769px) and (max-width: 900px) {
 	.auth-actions {
 		display: none;
@@ -882,7 +874,6 @@ label {
 	}
 }
 
-/* Медіа-запит для великих десктопів - показуємо десктопні кнопки, ховаємо мобільні */
 @media (min-width: 901px) {
 	.mobile-auth-actions {
 		display: none;
