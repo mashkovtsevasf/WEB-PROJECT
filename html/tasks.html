@@ -3,42 +3,75 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Task Tracker — Доска задач</title>
-	<link rel="stylesheet" href="css/styles.css" />
+	<title>Task Tracker — Список завдань</title>
+	<link rel="stylesheet" href="../css/styles.css" />
 </head>
 <body>
 	<header class="app-header">
-		<h1>Task Tracker</h1>
-		<nav class="top-nav">
-			<a href="index.html" class="active">Доска задач</a>
-			<a href="tasks.html">Завдання</a>
-			<a href="stats.html">Статистика</a>
-			<a href="users.html">Користувачі</a>
-		</nav>
-		<div class="auth-actions">
-			<button id="btn-register" class="btn-secondary">Реєстрація</button>
-			<button id="btn-login" class="btn-primary">Вхід</button>
+		<div class="header-content">
+			<div class="logo-section">
+				<h1>Task Tracker</h1>
+				<button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+					<span class="hamburger-line"></span>
+					<span class="hamburger-line"></span>
+					<span class="hamburger-line"></span>
+				</button>
+			</div>
+			<nav class="top-nav" id="top-nav">
+				<a href="index.html">Доска задач</a>
+				<a href="tasks.html" class="active">Завдання</a>
+				<a href="stats.html">Статистика</a>
+				<a href="users.html">Користувачі</a>
+				<div class="mobile-auth-actions">
+					<button id="btn-register-mobile" class="btn-secondary">Реєстрація</button>
+					<button id="btn-login-mobile" class="btn-primary">Вхід</button>
+				</div>
+			</nav>
+			<div class="auth-actions">
+				<button id="btn-register" class="btn-secondary">Реєстрація</button>
+				<button id="btn-login" class="btn-primary">Вхід</button>
+			</div>
 		</div>
 	</header>
 
 	<main class="container">
 		<section class="toolbar">
+			<div class="filters">
+				<input id="filter-text" type="text" placeholder="Пошук..." />
+				<select id="filter-status">
+					<option value="">Статус: всі</option>
+					<option value="todo">To Do</option>
+					<option value="in_progress">In Progress</option>
+					<option value="done">Done</option>
+				</select>
+				<select id="filter-priority">
+					<option value="">Пріоритет: всі</option>
+					<option value="low">Низький</option>
+					<option value="medium">Середній</option>
+					<option value="high">Високий</option>
+				</select>
+				<select id="filter-assignee"></select>
+				<input id="filter-from" type="date" />
+				<input id="filter-to" type="date" />
+				<button id="btn-clear-filters" class="btn-secondary">Скинути</button>
+			</div>
 			<button id="btn-new-task" class="btn-primary">Нове завдання</button>
 		</section>
 
-		<section class="kanban" id="kanban-board">
-			<article class="kanban-column" data-status="todo">
-				<h2>To Do</h2>
-				<div class="kanban-list" id="col-todo"></div>
-			</article>
-			<article class="kanban-column" data-status="in_progress">
-				<h2>In Progress</h2>
-				<div class="kanban-list" id="col-in_progress"></div>
-			</article>
-			<article class="kanban-column" data-status="done">
-				<h2>Done</h2>
-				<div class="kanban-list" id="col-done"></div>
-			</article>
+		<section>
+			<table class="table" id="tasks-table">
+				<thead>
+					<tr>
+						<th>Назва</th>
+						<th>Виконавець</th>
+						<th>Пріоритет</th>
+						<th>Дедлайн</th>
+						<th>Статус</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
 		</section>
 	</main>
 
@@ -140,6 +173,29 @@
 		</div>
 	</div>
 
-	<script src="js/app.js"></script>
+	<footer class="app-footer">
+		<div class="footer-content">
+			<div class="footer-section">
+				<h3>Task Tracker</h3>
+				<p>Сучасний інструмент для управління завданнями та проектами</p>
+			</div>
+			<div class="footer-section">
+				<h4>Контакти</h4>
+				<p>Email: support@tasktracker.com</p>
+				<p>Телефон: +380 (44) 123-45-67</p>
+			</div>
+			<div class="footer-section">
+				<h4>Підтримка</h4>
+				<p>Документація</p>
+				<p>FAQ</p>
+				<p>Технічна підтримка</p>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>&copy; 2025 Task Tracker. Всі права захищені.</p>
+		</div>
+	</footer>
+
+	<script src="../js/app.js"></script>
 </body>
 </html>

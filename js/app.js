@@ -144,6 +144,8 @@
 			el.className = 'card-task';
 			el.draggable = true;
 			el.dataset.id = task.id;
+			el.style.opacity = '0';
+			el.style.transform = 'translateY(20px)';
 			el.innerHTML = `
 				<div class="title">${escapeHtml(task.title)}</div>
 				<div class="meta">
@@ -158,6 +160,13 @@
 					<button class="btn-secondary" data-delete>Видалити</button>
 				</div>
 			`;
+			
+			// Add staggered animation
+			setTimeout(() => {
+				el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+				el.style.opacity = '1';
+				el.style.transform = 'translateY(0)';
+			}, Math.random() * 200);
 			el.addEventListener('dragstart', (e)=>{
 				e.dataTransfer.setData('text/plain', task.id);
 			});
@@ -219,6 +228,57 @@
 		const l = document.getElementById('btn-login');
 		if (r) r.addEventListener('click', ()=> document.getElementById('auth-register-modal')?.setAttribute('aria-hidden','false'));
 		if (l) l.addEventListener('click', ()=> document.getElementById('auth-login-modal')?.setAttribute('aria-hidden','false'));
+		
+		// Мобільні кнопки авторизації
+		const rMobile = document.getElementById('btn-register-mobile');
+		const lMobile = document.getElementById('btn-login-mobile');
+		if (rMobile) rMobile.addEventListener('click', ()=> {
+			document.getElementById('auth-register-modal')?.setAttribute('aria-hidden','false');
+			// Закриваємо бургер-меню після кліку
+			mobileMenuToggle.classList.remove('active');
+			topNav.classList.remove('active');
+		});
+		if (lMobile) lMobile.addEventListener('click', ()=> {
+			document.getElementById('auth-login-modal')?.setAttribute('aria-hidden','false');
+			// Закриваємо бургер-меню після кліку
+			mobileMenuToggle.classList.remove('active');
+			topNav.classList.remove('active');
+		});
+		
+		// Mobile menu toggle
+		const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+		const topNav = document.getElementById('top-nav');
+		
+		if (mobileMenuToggle && topNav) {
+			mobileMenuToggle.addEventListener('click', () => {
+				mobileMenuToggle.classList.toggle('active');
+				topNav.classList.toggle('active');
+			});
+			
+			// Close menu when clicking on links
+			topNav.addEventListener('click', (e) => {
+				if (e.target.tagName === 'A') {
+					mobileMenuToggle.classList.remove('active');
+					topNav.classList.remove('active');
+				}
+			});
+			
+			// Close menu when clicking outside
+			document.addEventListener('click', (e) => {
+				if (!mobileMenuToggle.contains(e.target) && !topNav.contains(e.target)) {
+					mobileMenuToggle.classList.remove('active');
+					topNav.classList.remove('active');
+				}
+			});
+			
+			// Close menu when pressing Escape key
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && topNav.classList.contains('active')) {
+					mobileMenuToggle.classList.remove('active');
+					topNav.classList.remove('active');
+				}
+			});
+		}
 	}
 
 	function bindTaskForm() {
@@ -244,12 +304,12 @@
 		for (const t of rows) {
 			const tr = document.createElement('tr');
 			tr.innerHTML = `
-				<td>${escapeHtml(t.title)}</td>
-				<td>${escapeHtml(findUserName(t.assigneeId))}</td>
-				<td>${priorityLabel(t.priority)}</td>
-				<td>${t.deadline || '—'}</td>
-				<td>${statusLabel(t.status)}</td>
-				<td style="text-align:right">
+				<td data-label="Назва">${escapeHtml(t.title)}</td>
+				<td data-label="Виконавець">${escapeHtml(findUserName(t.assigneeId))}</td>
+				<td data-label="Пріоритет">${priorityLabel(t.priority)}</td>
+				<td data-label="Дедлайн">${t.deadline || '—'}</td>
+				<td data-label="Статус">${statusLabel(t.status)}</td>
+				<td data-label="Дії" style="text-align:right">
 					<button class="btn-secondary" data-edit data-id="${t.id}">Редагувати</button>
 					<button class="btn-secondary" data-del data-id="${t.id}">Видалити</button>
 				</td>
@@ -310,14 +370,14 @@
 		for (const u of users) {
 			const tr = document.createElement('tr');
 			tr.innerHTML = `
-				<td>${escapeHtml(u.name)}</td>
-				<td>
+				<td data-label="Ім'я">${escapeHtml(u.name)}</td>
+				<td data-label="Роль">
 					<select data-role value="${u.role}">
 						<option value="member">Учасник</option>
 						<option value="admin">Адміністратор</option>
 					</select>
 				</td>
-				<td style="text-align:right">
+				<td data-label="Дії" style="text-align:left">
 					<button class="btn-secondary" data-del>Видалити</button>
 				</td>
 			`;

@@ -9,6 +9,18 @@
 	--success: #3ccf91;
 	--warning: #f7b955;
 	--border: #2a2f3a;
+	
+	/* Responsive units */
+	--base-font-size: 1rem;
+	--header-height: 4rem;
+	--container-padding: clamp(0.5rem, 2vw, 2rem);
+	--border-radius: 0.5rem;
+	--spacing-xs: 0.25rem;
+	--spacing-sm: 0.5rem;
+	--spacing-md: 1rem;
+	--spacing-lg: 1.5rem;
+	--spacing-xl: 2rem;
+	--spacing-xxl: 3rem;
 }
 
 * {
@@ -33,15 +45,67 @@ a {
 }
 
 .app-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 12px 16px;
 	border-bottom: 1px solid var(--border);
 	background: var(--panel);
 	position: sticky;
 	top: 0;
 	z-index: 10;
+}
+
+.header-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between; /* Рівномірний розподіл елементів */
+	padding: var(--spacing-md) var(--container-padding);
+	max-width: 1200px;
+	margin: 0 auto;
+	height: var(--header-height);
+}
+
+.logo-section {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.mobile-menu-toggle {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 2rem;
+	height: 2rem;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	z-index: 20;
+	gap: 4px;
+	position: relative;
+}
+
+.hamburger-line {
+	width: 20px;
+	height: 2px;
+	background: var(--text);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	transform-origin: center;
+	border-radius: 1px;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+	transform: rotate(45deg) translate(0, 0);
+	position: absolute;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+	opacity: 0;
+	transform: scaleX(0);
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+	transform: rotate(-45deg) translate(0, 0);
+	position: absolute;
 }
 
 .top-nav a {
@@ -66,9 +130,10 @@ a {
 }
 
 .container {
-	padding: 16px;
+	padding: var(--container-padding);
 	max-width: 1200px;
 	margin: 0 auto;
+	min-height: calc(100vh - var(--header-height));
 }
 
 .toolbar {
@@ -274,7 +339,7 @@ label {
 .kanban {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 12px;
+	gap: var(--spacing-md);
 }
 
 .kanban-column {
@@ -454,7 +519,137 @@ label {
 	outline-offset: 2px;
 }
 
+/* Footer Styles */
+.app-footer {
+	background: var(--panel);
+	border-top: 1px solid var(--border);
+	margin-top: 3rem;
+	padding: 2rem 0 1rem;
+}
+
+.footer-content {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 2rem;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+
+.footer-section h3,
+.footer-section h4 {
+	color: var(--text);
+	margin-bottom: 1rem;
+}
+
+.footer-section p {
+	color: var(--muted);
+	margin: 0.5rem 0;
+	line-height: 1.6;
+}
+
+.footer-bottom {
+	text-align: center;
+	padding: 1rem;
+	border-top: 1px solid var(--border);
+	margin-top: 2rem;
+	color: var(--muted);
+}
+
+/* Card animations */
+.card-task {
+	animation: slideInUp 0.3s ease-out;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-task:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Improved responsive design */
+@media (max-width: 1200px) {
+	.container {
+		padding: 1rem;
+	}
+	
+	.kanban {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+	}
+}
+
 @media (max-width: 900px) {
+	.mobile-menu-toggle {
+		display: flex;
+	}
+	
+	.logo-section {
+		width: 100%;
+		justify-content: space-between;
+	}
+	
+	.top-nav {
+		position: fixed;
+		top: 0;
+		right: -100%; /* Змінюємо з left на right */
+		width: 80%;
+		max-width: 300px;
+		height: 100vh;
+		background: var(--panel);
+		flex-direction: column;
+		padding: 4rem 1rem 1rem;
+		transition: right 0.3s ease; /* Змінюємо transition на right */
+		z-index: 15;
+		border-left: 1px solid var(--border); /* Змінюємо border-right на border-left */
+	}
+	
+	.top-nav.active {
+		right: 0; /* Змінюємо з left: 0 на right: 0 */
+	}
+	
+	.top-nav a {
+		display: block;
+		padding: 1rem;
+		margin: 0.5rem 0;
+		border-radius: 8px;
+		text-align: center;
+		transition: background 0.2s ease;
+	}
+	
+	.top-nav a:hover {
+		background: var(--secondary);
+	}
+	
+	.auth-actions {
+		display: none;
+	}
+	
+	.mobile-auth-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--border);
+	}
+	
+	.mobile-auth-actions button {
+		width: 100%;
+		justify-content: center;
+	}
+
 	.kanban {
 		grid-template-columns: 1fr;
 	}
@@ -472,6 +667,29 @@ label {
 		align-self: stretch;
 		width: 100%;
 	}
+	
+	.footer-content {
+		grid-template-columns: 1fr;
+		text-align: center;
+	}
+}
+
+@media (max-width: 768px) {
+	.header-content {
+		padding: 0.75rem 1rem;
+	}
+	
+	.container {
+		padding: 0.75rem;
+	}
+	
+	.kanban {
+		gap: 0.75rem;
+	}
+	
+	.kanban-column {
+		padding: 0.75rem;
+	}
 }
 
 @media (max-width: 600px) {
@@ -483,5 +701,194 @@ label {
 	.filters select {
 		min-width: auto;
 		width: 100%;
+	}
+	
+	.cards {
+		grid-template-columns: 1fr;
+	}
+	
+	.modal-content {
+		width: 95vw;
+		margin: 1rem;
+	}
+	
+	.footer-content {
+		padding: 0 0.5rem;
+	}
+	
+	/* Адаптивна таблица завдань для мобільних */
+	.table {
+		font-size: 0.875rem;
+		overflow-x: auto;
+		display: block;
+		white-space: nowrap;
+	}
+	
+	.table thead,
+	.table tbody,
+	.table tr {
+		display: block;
+	}
+	
+	.table thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	.table tr {
+		border: 1px solid var(--border);
+		margin-bottom: 0.75rem;
+		padding: 0.75rem;
+		border-radius: 12px;
+		background: var(--panel);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+	
+	.table td {
+		border: none;
+		position: relative;
+		padding: 0.5rem 0.5rem 0.5rem 45%;
+		display: block;
+		text-align: left;
+		word-wrap: break-word;
+	}
+	
+	.table td:before {
+		content: attr(data-label) ": ";
+		position: absolute;
+		left: 6px;
+		width: 40%;
+		padding-right: 10px;
+		white-space: nowrap;
+		font-weight: 600;
+		color: var(--muted);
+		font-size: 0.8rem;
+	}
+	
+	.table td:last-child {
+		text-align: right;
+		padding-left: 0.5rem;
+	}
+	
+	.table td:last-child:before {
+		content: "";
+	}
+	
+	.table td:last-child button {
+		margin-left: 0.25rem;
+		font-size: 0.75rem;
+		padding: 0.25rem 0.5rem;
+	}
+	
+	/* Адаптивна таблиця користувачів для мобільних */
+	#users-table .table tr {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding: 1rem;
+		margin-bottom: 1rem;
+		border-radius: 12px;
+		background: var(--panel);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+	
+	#users-table .table td {
+		padding: 0.5rem 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid var(--border);
+	}
+	
+	#users-table .table td:last-child {
+		border-bottom: none;
+		justify-content: flex-start; /* Переміщуємо кнопку вліво */
+	}
+	
+	#users-table .table td:before {
+		content: attr(data-label) ": ";
+		font-weight: 600;
+		color: var(--muted);
+		font-size: 0.8rem;
+		margin-right: 0.5rem;
+	}
+	
+	#users-table .table td:last-child:before {
+		content: "";
+		display: none; /* Приховуємо псевдоелемент для кнопки */
+	}
+	
+	#users-table .table td:last-child button {
+		margin: 0;
+		width: auto;
+	}
+	
+	#users-table .table td[data-role] {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	
+	#users-table .table td[data-role] select {
+		flex: 1;
+		max-width: 150px;
+	}
+	
+	/* Адаптивна форма додавання користувачів */
+	.toolbar .row {
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+	
+	.toolbar .row input,
+	.toolbar .row select,
+	.toolbar .row button {
+		width: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+	.header-content {
+		padding: 0.5rem;
+	}
+	
+	.container {
+		padding: 0.5rem;
+	}
+	
+	.card-task {
+		padding: 0.75rem;
+	}
+	
+	.modal-content {
+		width: 98vw;
+		margin: 0.5rem;
+	}
+	
+	#chart-status {
+		display: none;
+	}
+}
+
+/* Медіа-запит для середніх екранів - ховаємо десктопні кнопки, залишаємо тільки в бургер-меню */
+@media (min-width: 769px) and (max-width: 900px) {
+	.auth-actions {
+		display: none;
+	}
+	
+	.mobile-auth-actions {
+		display: none;
+	}
+}
+
+/* Медіа-запит для великих десктопів - показуємо десктопні кнопки, ховаємо мобільні */
+@media (min-width: 901px) {
+	.mobile-auth-actions {
+		display: none;
+	}
+	
+	.auth-actions {
+		display: flex;
 	}
 }
