@@ -36,7 +36,6 @@
 ```
 web project/
 ├── html/               # HTML файли
-│   ├── index.html      # Головна сторінка (Kanban)
 │   ├── tasks.html      # Список завдань
 │   ├── stats.html      # Статистика
 │   └── users.html      # Управління користувачами
@@ -44,6 +43,7 @@ web project/
 │   └── styles.css      # Основні стилі
 ├── js/
 │   └── app.js          # JavaScript логіка
+├── index.html
 └── README.md           # Документація
 ```
 ## 🎯 Функціональність
